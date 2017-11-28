@@ -1,0 +1,54 @@
+{
+  "name": "react-monitor-servidor",
+  "version": "1.0.0",
+  "description": "Monitor de servidores",
+  "main": "webpack-config.js",
+  "scripts": {
+    "dev": "webpack-dev-server --progress --colors --inline --hot --config webpack.dev.js",
+    "production": "webpack --progress -p --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gilmario-kpslow/monitor-servidor.git"
+  },
+  "keywords": [
+    "React",
+    "monitor"
+  ],
+  "author": "gilmariosoftware@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gilmario-kpslow/monitor-servidor/issues"
+  },
+  "homepage": "https://github.com/gilmario-kpslow/monitor-servidor#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0-beta",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-multi": "^0.1.12",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
+    "style-loader": "^0.19.0",
+    "uglifyjs-webpack-plugin": "^1.1.0",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4",
+    "webpack-merge": "^4.1.1"
+  }
+}

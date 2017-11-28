@@ -1,0 +1,2 @@
+export const BASE_NAME = process.env.NODE_ENV !== 'production' ? '':''
+export const BASE_URL_API = process.env.NODE_ENV !==  'production' ? 'http://10.100.0.39:8080/monitor/api/v1' : 'https://gestor.caucaia.ce.gov.br/monitor/api/v1'
