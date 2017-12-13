@@ -12,7 +12,7 @@ export default props => {
     }
 
     return (
-        <div className="card special">
+        <div className="card special"> 
             <div className="card-header">
                 <h4 className="card-title">{props.servidor.nome}</h4>
                 <span className="text-muted small">{props.servidor.ip}</span>

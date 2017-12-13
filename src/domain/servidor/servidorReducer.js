@@ -6,13 +6,12 @@ const INICIAL = {
 }
 
 export default (state = INICIAL, action) => {
-    console.log(action)
     switch (action.type) {
         case 'PESQUISAR':
             return { ...state, lista: action.payload }
         case 'CHANGE':
             return { ...state, servidor: {...state.servidor, ...action.payload} }
-        case 'SALVOU':
+        case 'ADD_SERVIDOR':
             return { ...state, servidor: servidor }
         default: return state
     }

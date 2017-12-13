@@ -16,21 +16,23 @@ import { HashRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/home/home'
 import ServidorCadastro from './pages/servidor/cadastra'
 import servidorReducer from './domain/servidor/servidorReducer'
+import servicoReducer from './domain/servico/servicoReducer'
 import { ToastContainer, toast } from 'react-toastify';
 
 const reducers = combineReducers({
-    servidor:servidorReducer
+    servidor: servidorReducer,
+    servico: servicoReducer
 })
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-const store = applyMiddleware(multi, promise, thunk)(createStore)(reducers,devTools)
+const store = applyMiddleware(multi, promise, thunk)(createStore)(reducers, devTools)
 
 ReactDOM.render(
     <Provider store={store}>
         <Router>
             <App>
-                <ToastContainer/>
+                <ToastContainer />
                 <Route component={Home} path="/" exact />
                 <Route component={ServidorCadastro} path="/servidor/cadastro" exact />
             </App>
