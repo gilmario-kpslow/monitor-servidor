@@ -1,6 +1,6 @@
+import './res/reset.css'
 import 'modules/bootstrap/dist/css/bootstrap.min.css'
 import 'modules/font-awesome/css/font-awesome.min.css'
-import './res/reset.css'
 import './res/app.css'
 import 'jquery';
 import 'bootstrapjs';
@@ -12,22 +12,27 @@ import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 import App from './main/app'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import Home from './pages/home/home'
+import ServidorCadastro from './pages/servidor/cadastra'
+import servidorReducer from './domain/servidor/servidorReducer'
+import { ToastContainer, toast } from 'react-toastify';
 
+const reducers = combineReducers({
+    servidor:servidorReducer
+})
 
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__
-    && window.__REDUX_DEVTOOLS_EXTENSION__()
-
-
-const store = applyMiddleware(multi, promise, thunk)(createStore)(devTools)
+const store = applyMiddleware(multi, promise, thunk)(createStore)(reducers,devTools)
 
 ReactDOM.render(
     <Provider store={store}>
         <Router>
             <App>
+                <ToastContainer/>
                 <Route component={Home} path="/" exact />
+                <Route component={ServidorCadastro} path="/servidor/cadastro" exact />
             </App>
         </Router>
     </Provider>
