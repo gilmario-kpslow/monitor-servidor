@@ -1,7 +1,7 @@
 import { GET, POST } from './headers'
 import { URL } from '../../config/configConstantes'
 import { toast } from 'react-toastify'
-
+import {info} from '../../log/log'
 
 export const pesquisar = () => {
     return dispacth => {
@@ -12,15 +12,18 @@ export const pesquisar = () => {
                 "Accept": "Application/json",
             })
         }
-
+        info('Iniciando pesquisa')
         fetch(`${URL}/servidor`, opcoes).then(response => {
             if (response.ok) {
                 dispacth({ type: 'PESQUISAR', payload: response.json() })
             } else {
+                info('Erro ao consultar')
                 mensagem({ tipo: "erro", response })
             }
         }).catch(err => {
+            info('Erro no fetch')
             mensagem({ tipo: "erro", descricao: err.message })
+            dispacth({ type: 'PESQUISAR', payload:[]})
         })
     }
 }
@@ -43,7 +46,6 @@ export const change = (event) => {
 
 export const incluir = (servidor) => {
     return dispacth => {
-        console.log(servidor)
         const opcoes = {
             method: "post",
             body: JSON.stringify(servidor),
@@ -66,7 +68,6 @@ export const incluir = (servidor) => {
                 }
             }).catch(error => {
                 mensagem({ tipo: "erro", descricao: error.message })
-                console.log(error)
             })
     }
 

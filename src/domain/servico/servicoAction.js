@@ -1,5 +1,6 @@
 import { URL } from '../../config/configConstantes'
 import { toast } from 'react-toastify'
+import {info} from '../../log/log'
 
 
 export const pesquisar = (id) => {
@@ -11,15 +12,18 @@ export const pesquisar = (id) => {
                 "Accept": "Application/json",
             })
         }
-
+        info('iniciando pesquisa')
         fetch(`${URL}/servico/${id}`, opcoes).then(response => {
             if (response.ok) {
+                info('sucesso pesquisa')
                 dispacth({ type: 'PESQUISAR', payload: response.json() })
             } else {
+                info('erro pesquisa')
                 mensagem({ tipo: "erro", response })
             }
         }).catch(err => {
-            mensagem({ tipo: "erro", descricao: err.message })
+            info('erro pesquisa 2')
+            mensagem({ tipo: "erro", descricao: err.message+' - '+ err })
         })
     }
 }
@@ -42,7 +46,6 @@ export const change = (event) => {
 
 export const incluir = (servico) => {
     return dispacth => {
-        console.log(servico)
         const opcoes = {
             method: "post",
             body: JSON.stringify(servico),
@@ -65,7 +68,6 @@ export const incluir = (servico) => {
                 }
             }).catch(error => {
                 mensagem({ tipo: "erro", descricao: error.message })
-                console.log(error)
             })
     }
 
