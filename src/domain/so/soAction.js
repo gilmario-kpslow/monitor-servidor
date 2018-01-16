@@ -12,7 +12,7 @@ export const pesquisar = () => {
             })
         }
         info('Iniciando pesquisa')
-        fetch(`${URL}/servidor`, opcoes).then(response => {
+        fetch(`${URL}/so`, opcoes).then(response => {
             if (response.ok) {
                 dispacth({ type: 'PESQUISAR', payload: response.json() })
             } else {
@@ -37,58 +37,39 @@ const mensagem = (mensagem) => {
     }
 }
 
-const processaPropriedades = (name) =>{
-    const prop = name.split('.')[0]
-    const comps = document.getElementsByClassName(prop)
-    const newObj = {}
-    for(let i = 0 ;i<comps.length;i++){
-        const c = comps.item(i)
-        const v = c.value
-        const p = c.name.replace(`${prop}.`,'')
-        newObj[p] = v
-    }
-    return  { [prop]: newObj }
-}
+
 
 export const change = (event) => {
     const value = event.target.value
     const name = event.target.name
-    if (name.includes('.')) {
-        const processado = processaPropriedades(name)
-        return { type: "CHANGE", payload: processado}
-    }
-    return { type: "CHANGE", payload: { [name]: value } }
-}
-
-export const atualizaCampo = (name, value) => {
     return { type: "CHANGE", payload: { [name]: value } }
 }
 
 export const novo = () => {
-    return { type: "NOVO", payload: "" }
+    return { type: "NOVO", payload: {} }
 }
 
-export const incluir = (servidor) => {
+export const incluir = (so) => {
     return dispacth => {
         const opcoes = {
             method: "post",
-            body: JSON.stringify(servidor),
+            body: JSON.stringify(so),
             headers: new Headers({
                 "Content-Type": "Application/json",
                 "Accept": "Application/json",
             })
         }
 
-        fetch(new Request(`${URL}/servidor`, opcoes))
+        fetch(new Request(`${URL}/so`, opcoes))
             .then(response => {
                 if (response.ok) {
-                    mensagem({ tipo: "sucesso", descricao: "Servidor cadastrado" })
+                    mensagem({ tipo: "sucesso", descricao: "Sistema Operacional cadastrado" })
                     dispacth({
-                        type: 'ADD_SERVICO',
-                        payload: servidor
+                        type: 'SALVAR',
+                        payload: so
                     })
                 } else {
-                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Servidor" })
+                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Sistema Operacional" })
                 }
             }).catch(error => {
                 mensagem({ tipo: "erro", descricao: error.message })
@@ -96,7 +77,7 @@ export const incluir = (servidor) => {
     }
 }
 
-export const getServidor = id => {
+export const getSo = id => {
 
     info(id)
     return dispacth => {
@@ -108,7 +89,7 @@ export const getServidor = id => {
             })
         }
         info('Iniciando view' + id)
-        fetch(`${URL}/servidor/${id}`, opcoes).then(response => {
+        fetch(`${URL}/so/${id}`, opcoes).then(response => {
             if (response.ok) {
                 dispacth({ type: 'VIEW', payload: response.json() })
             } else {

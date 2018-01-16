@@ -1,7 +1,7 @@
 const servico = { nome: ''}
 
 const INICIAL = {
-    lista: [],
+    lista: [{nome:"servico", nome:"teste"}],
     servico: servico
 }
 

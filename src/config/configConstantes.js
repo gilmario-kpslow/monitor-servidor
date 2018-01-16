@@ -1,2 +1,2 @@
 export const BASE_NAME = process.env.NODE_ENV !== 'production' ? '':''
-export const URL = process.env.NODE_ENV !==  'production' ? 'http://localhost:8080/monitor/api/v1' : 'https://gestor.caucaia.ce.gov.br/monitor/api/v1'
+export const URL = process.env.NODE_ENV !==  'production' ? 'http://localhost:8080/api/v1' : 'https://gestor.caucaia.ce.gov.br/api/v1'

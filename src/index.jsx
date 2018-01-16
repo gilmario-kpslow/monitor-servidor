@@ -12,16 +12,21 @@ import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 import App from './main/app'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './pages/home/home'
 import ServidorCadastro from './pages/servidor/cadastra'
+import ProcessadorCadastro from './pages/processador/cadastro'
+import SoCadastro from './pages/so/cadastra'
+import ServidorView from './pages/servidor/servidorview'
 import servidorReducer from './domain/servidor/servidorReducer'
 import servicoReducer from './domain/servico/servicoReducer'
+import soReducer from './domain/so/soReducer'
 import { ToastContainer, toast } from 'react-toastify';
 
 const reducers = combineReducers({
     servidor: servidorReducer,
-    servico: servicoReducer
+    servico: servicoReducer,
+    so : soReducer
 })
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -33,8 +38,13 @@ ReactDOM.render(
         <Router>
             <App>
                 <ToastContainer />
-                <Route component={Home} path="/" exact />
-                <Route component={ServidorCadastro} path="/servidor/cadastro" exact />
+                <Switch>
+                    <Route component={Home} path="/" exact />
+                    <Route component={ServidorCadastro} path="/servidor/cadastro" />
+                    <Route component={SoCadastro} path="/so/cadastro" />
+                    <Route component={ProcessadorCadastro} path="/processador/cadastro" />
+                    <Route component={ServidorView} path="/servidor/:id" />
+                </Switch>
             </App>
         </Router>
     </Provider>
