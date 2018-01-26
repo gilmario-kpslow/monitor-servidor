@@ -13,9 +13,10 @@ export default props => (
             <span className="text-muted small">IP: {props.servidor.ip}</span>
         </div>
         <div className="card-body">
-            <span className="card-title">Funcionalidade: {props.servidor.funcionalidade}</span>
+            <p className="card-title text-muted small font-weight-bold">Funcionalidade</p>
+            <span>{props.servidor.funcionalidade}</span>
+            {props.children}
         </div>
-        {props.children}
         <div className="card-footer text-muted">
             <div className="row">
                 <div className="col-md">

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import Panel from '../../componentes/layout/panel';
-import {pesquisar } from '../../domain/so/soAction'
+import {pesquisar } from '../../domain/processador/processadorAction'
 import If from '../../componentes/logica/if'
 import {publicaRedux} from '../../componentes/logica/publicaRedux'
 
-class ListaSo extends Component {
+class ListaProcessador extends Component {
 
     componentWillMount(){
         this.props.pesquisar()
@@ -12,7 +12,7 @@ class ListaSo extends Component {
 
     render() {
         return (
-            <Panel titulo="Consulta de Sistema Operacional">
+            <Panel titulo="Consulta de Processadores">
                 <div className="row">
                     <div className="col-md">
                         <table className="table">
@@ -20,15 +20,21 @@ class ListaSo extends Component {
                                 <tr>
                                     <th>ID</th>
                                     <th>Nome</th>
+                                    <th>Cash</th>
+                                    <th>Nucleos</th> 
+                                    <th>Frequência</th> 
                                 </tr>
                             </thead>
                             <tbody>
                                 <If teste={this.props.lista } vazio="">
                                     {
-                                        this.props.lista.map((so) =>(
-                                            <tr key={so.id}>
-                                                <td>{so.id}</td>
-                                                <td>{so.nome}</td>
+                                        this.props.lista.map((p) =>(
+                                            <tr key={p.id}>
+                                                <td>{p.id}</td>
+                                                <td>{p.nome}</td>
+                                                <td>{p.memoriaCash} Mb</td>
+                                                <td>{p.cores}</td>
+                                                <td>{p.frequencia} Ghz</td>
                                             </tr>
                                         ))
                                     }
@@ -43,4 +49,4 @@ class ListaSo extends Component {
 }
 
 const mapState = state => ({ lista: state.so.lista })
-export default publicaRedux(ListaSo, mapState, {pesquisar})
+export default publicaRedux(ListaProcessador, mapState,{pesquisar})

@@ -14,7 +14,6 @@ export class ServidorView extends Component {
 
     constructor(props) {
         super(props)
-        info(props)
     }
 
     componentWillMount() {
@@ -22,26 +21,25 @@ export class ServidorView extends Component {
     }
 
     servicos() {
-        <ul className="list-group list-group-flush">
-            <If teste={this.props.servidor.servicos}> 
-                {this.props.servidor.servicos.map(servico => (
-                    <li key={servico.id} className="list-group-item">{servico.nome}</li>
-                ))}
-            </If>
-        }
-        </ul>
+        <If teste={this.props.servidor.servicos}>
+            {this.props.servidor.servicos.map(servico => (
+                <li key={servico.id} className="list-group-item">{servico.nome}</li>
+            ))}
+        </If>
     }
+
+    menu()
+
 
     render() {
 
         const servidor = this.props.servidor.servidor
         return (
-            <ServidorCard servidor={servidor}>
-                {this.servicos()}
+            <ServidorCard servidor={servidor} menu={this.menu()}>
+                <ul className="list-group list-group-flush">
+                    {this.servicos()}
+                </ul>
             </ServidorCard>
-
-            
-            
         )
     }
 }

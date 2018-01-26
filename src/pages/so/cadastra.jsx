@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import InputLabel from '../../componentes/form/inputLabel'
-import {incluir, change, novo} from '../../domain/so/soAction'
+import { incluir, novo } from '../../domain/so/soAction'
+import { change } from '../../domain/padrao/actionPadrao'
 import { info } from '../../log/log'
 import Panel from '../../componentes/layout/panel'
+import {publicaRedux} from '../../componentes/logica/publicaRedux'
 
 class SoCadastro extends Component {
 
@@ -12,8 +12,8 @@ class SoCadastro extends Component {
         super(props)
     }
 
-    footer(){
-        return(<button className="btn btn-danger form-control" onClick={() => { this.props.incluir(this.props.so) }}><i className="fa fa-disk"></i> Salvar</button>)
+    footer() {
+        return (<button className="btn btn-danger form-control" onClick={() => { this.props.incluir(this.props.so) }}><i className="fa fa-disk"></i> Salvar</button>)
     }
 
     render() {
@@ -21,23 +21,15 @@ class SoCadastro extends Component {
             <div>
                 <Panel titulo="Cadastro de Sistema Operacional" footer={this.footer()}>
                     <div className="row">
-                        <InputLabel estilo="col-md" label="Nome" value={this.props.so.nome} name="nome"  change={this.props.change}/>
-
+                        <InputLabel estilo="col-md" label="Nome" value={this.props.so.nome} name="nome" change={this.props.change} />
                     </div>
                 </Panel>
             </div>
-
         )
-
-
     }
-
-
 }
 
 const mapState = state => ({
     so: state.so.so
 })
-
-const actions = (dispach) => bindActionCreators({ incluir, change, novo }, dispach)
-export default connect(mapState, actions)(SoCadastro)
+export default publicaRedux(SoCadastro,mapState,{ incluir, change, novo })

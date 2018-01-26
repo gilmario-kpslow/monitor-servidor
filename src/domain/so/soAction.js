@@ -1,6 +1,8 @@
 import { URL } from '../../config/configConstantes'
 import { toast } from 'react-toastify'
 import { info } from '../../log/log'
+import { mensagem } from '../padrao/actionPadrao';
+
 
 export const pesquisar = () => {
     return dispacth => {
@@ -14,7 +16,7 @@ export const pesquisar = () => {
         info('Iniciando pesquisa')
         fetch(`${URL}/so`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'PESQUISAR', payload: response.json() })
+                dispacth({ type: 'PESQUISAR_SO', payload: response.json() })
             } else {
                 info('Erro ao consultar')
                 mensagem({ tipo: "erro", response })
@@ -22,31 +24,13 @@ export const pesquisar = () => {
         }).catch(err => {
             info('Erro no fetch')
             mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'PESQUISAR', payload: [] })
+            dispacth({ type: 'PESQUISAR_SO', payload: [] })
         })
     }
 }
 
-const mensagem = (mensagem) => {
-    switch (mensagem.tipo) {
-        case "erro": toast.error(mensagem.descricao)
-            break
-        case "sucesso": toast.success(mensagem.descricao)
-            break
-        default: toast(mensagem.descricao)
-    }
-}
-
-
-
-export const change = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-    return { type: "CHANGE", payload: { [name]: value } }
-}
-
 export const novo = () => {
-    return { type: "NOVO", payload: {} }
+    return { type: "NOVO_SO", payload: {} }
 }
 
 export const incluir = (so) => {
@@ -65,7 +49,7 @@ export const incluir = (so) => {
                 if (response.ok) {
                     mensagem({ tipo: "sucesso", descricao: "Sistema Operacional cadastrado" })
                     dispacth({
-                        type: 'SALVAR',
+                        type: 'SALVAR_SO',
                         payload: so
                     })
                 } else {
@@ -91,7 +75,7 @@ export const getSo = id => {
         info('Iniciando view' + id)
         fetch(`${URL}/so/${id}`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'VIEW', payload: response.json() })
+                dispacth({ type: 'VER_SO', payload: response.json() })
             } else {
                 info('Erro ao consultar')
                 mensagem({ tipo: "erro", response })
@@ -99,7 +83,7 @@ export const getSo = id => {
         }).catch(err => {
             info('Erro no fetch')
             mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'VIEW', payload: '' })
+            dispacth({ type: 'VER_SO', payload: '' })
         })
     }
 }

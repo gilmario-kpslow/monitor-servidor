@@ -10,7 +10,11 @@ export default props => (
             <MenuDrop label="Cadastrar" id="menu-cadastrar">
                 <Menuitem para="/so/cadastro" label="SO" />
                 <Menuitem para="/processador/cadastro" label="Processadores" />
-                <Menuitem para="/servidor/cadastro" label="Servidor"/>
+                <Menuitem para="/servidor/cadastro" label="Servidor" />
+            </MenuDrop>
+            <MenuDrop label="Consulta" id="menu-consultar">
+                <Menuitem para="/so/lista" label="SO" />
+                <Menuitem para="/processador/lista" label="Processador" />
             </MenuDrop>
         </MenuDrop>
     </Menu>

@@ -12,9 +12,9 @@ export const pesquisar = () => {
             })
         }
         info('Iniciando pesquisa')
-        fetch(`${URL}/servidor`, opcoes).then(response => {
+        fetch(`${URL}/processador`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'PESQUISAR_SERVIDOR', payload: response.json() })
+                dispacth({ type: 'PESQUISAR_PROCESSADOR', payload: response.json() })
             } else {
                 info('Erro ao consultar')
                 mensagem({ tipo: "erro", response })
@@ -22,36 +22,36 @@ export const pesquisar = () => {
         }).catch(err => {
             info('Erro no fetch')
             mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'PESQUISAR_SERVIDOR', payload: [] })
+            dispacth({ type: 'PESQUISAR_PROCESSADOR', payload: [] })
         })
     }
 }
 
 export const novo = () => {
-    return { type: "NOVO_SERVIDOR", payload: "" }
+    return { type: "NOVO", payload: {} }
 }
 
-export const incluir = (servidor) => {
+export const incluir = (processador) => {
     return dispacth => {
         const opcoes = {
             method: "post",
-            body: JSON.stringify(servidor),
+            body: JSON.stringify(processador),
             headers: new Headers({
                 "Content-Type": "Application/json",
                 "Accept": "Application/json",
             })
         }
 
-        fetch(new Request(`${URL}/servidor`, opcoes))
+        fetch(new Request(`${URL}/processador`, opcoes))
             .then(response => {
                 if (response.ok) {
-                    mensagem({ tipo: "sucesso", descricao: "Servidor cadastrado" })
+                    mensagem({ tipo: "sucesso", descricao: "Cadastrado com sucesso!" })
                     dispacth({
-                        type: 'SALVAR_SERVIDOR',
-                        payload: servidor
+                        type: 'SALVAR_PROCESSADOR',
+                        payload: processador
                     })
                 } else {
-                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Servidor" })
+                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Sistema Operacional" })
                 }
             }).catch(error => {
                 mensagem({ tipo: "erro", descricao: error.message })
@@ -59,7 +59,7 @@ export const incluir = (servidor) => {
     }
 }
 
-export const getServidor = id => {
+export const getProcessador = id => {
 
     info(id)
     return dispacth => {
@@ -71,9 +71,9 @@ export const getServidor = id => {
             })
         }
         info('Iniciando view' + id)
-        fetch(`${URL}/servidor/${id}`, opcoes).then(response => {
+        fetch(`${URL}/processador/${id}`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'VER_SERVIDOR', payload: response.json() })
+                dispacth({ type: 'VIEW_PROCESSADOR', payload: response.json() })
             } else {
                 info('Erro ao consultar')
                 mensagem({ tipo: "erro", response })
@@ -81,8 +81,7 @@ export const getServidor = id => {
         }).catch(err => {
             info('Erro no fetch')
             mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'VER_SERVIDOR', payload: '' })
+            dispacth({ type: 'VIEW', payload: '' })
         })
     }
 }
-
