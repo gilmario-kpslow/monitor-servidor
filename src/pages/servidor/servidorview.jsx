@@ -28,7 +28,11 @@ export class ServidorView extends Component {
         </If>
     }
 
-    menu()
+    menu(){
+        return (
+            <div>OK</div>
+        )
+    }
 
 
     render() {
