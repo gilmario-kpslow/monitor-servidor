@@ -1,11 +1,11 @@
 import React from 'react'
 
 export default props => (
-    <section className="row">
-        <div className="col-md-12">
+    <section className="row justify-content-center">
+        <div className={props.stilo ? props.stilo : 'col-md-12'}>
             <div className="card">
                 <div className="card-header">
-                    <h4 className="card-title">{props.titulo}</h4>
+                    <label className="font-weight-bold">{props.titulo}</label>
                 </div>
                 <div className="card-body">
                     {props.children}

@@ -1,7 +1,7 @@
-import { URL } from '../../config/configConstantes'
-import { toast } from 'react-toastify'
+import {URL} from '../../config/configConstantes'
+import {toast} from 'react-toastify'
 import {info} from '../../log/log'
-
+import {changeInput} from '../padrao/actionPadrao'
 
 export const pesquisar = (id) => {
     return dispacth => {
@@ -16,35 +16,43 @@ export const pesquisar = (id) => {
         fetch(`${URL}/servico/${id}`, opcoes).then(response => {
             if (response.ok) {
                 info('sucesso pesquisa')
-                dispacth({ type: 'PESQUISAR', payload: response.json() })
+                dispacth({
+                    type: 'PESQUISAR',
+                    payload: response.json()
+                })
             } else {
                 info('erro pesquisa')
-                mensagem({ tipo: "erro", response })
+                mensagem({
+                    tipo: "erro",
+                    response
+                })
             }
         }).catch(err => {
             info('erro pesquisa 2')
-            mensagem({ tipo: "erro", descricao: err.message+' - '+ err })
+            mensagem({
+                tipo: "erro",
+                descricao: err.message + ' - ' + err
+            })
         })
     }
 }
 
 const mensagem = (mensagem) => {
     switch (mensagem.tipo) {
-        case "erro": toast.error(mensagem.descricao)
+        case "erro":
+            toast.error(mensagem.descricao)
             break
-        case "sucesso": toast.success(mensagem.descricao)
+        case "sucesso":
+            toast.success(mensagem.descricao)
             break
-        default: toast(mensagem.descricao)
+        default:
+            toast(mensagem.descricao)
     }
 }
 
-export const change = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-    return { type: "CHANGE", payload: { [name]: value } }
-}
-
 export const incluir = (servico) => {
+
+    info(JSON.stringify(servico))
     return dispacth => {
         const opcoes = {
             method: "post",
@@ -58,19 +66,46 @@ export const incluir = (servico) => {
         fetch(new Request(`${URL}/servico`, opcoes))
             .then(response => {
                 if (response.ok) {
-                    mensagem({ tipo: "sucesso", descricao: "servico cadastrado" })
-                    dispacth({
-                        type: 'ADD_SERVICO',
-                        payload: servico
+                    mensagem({
+                        tipo: "sucesso",
+                        descricao: "servico cadastrado"
                     })
+                    dispacth(
+                        novo(servico.servidor.id)
+                    )
                 } else {
-                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar servico" })
+                    response.json().then(validacoes => {
+                        validacoes.forEach(e => {
+                            mensagem({
+                                tipo: "erro",
+                                descricao: e.mensagem
+                            })
+                        });
+                        const invalidos = []
+                        validacoes.forEach(e => (
+                            invalidos[e.elemento] = e.mensagem
+                        ))
+                        dispacth({
+                            type: 'ERRO_SERVICO',
+                            payload: invalidos
+                        })
+                    })
                 }
             }).catch(error => {
-                mensagem({ tipo: "erro", descricao: error.message })
+                mensagem({
+                    tipo: "erro",
+                    descricao: error.message
+                })
             })
     }
-
-
-
 }
+
+export const novo = (id) => ({
+    type: "NOVO_SERVICO",
+    payload: id
+})
+
+export const change = (event) => ({
+    type: "CHANGE_SERVICO",
+    payload: changeInput(event)
+})

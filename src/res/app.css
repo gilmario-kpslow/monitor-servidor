@@ -41,3 +41,9 @@ body{
     position: absolute;
     z-index: 999;
 }
+
+label{
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+

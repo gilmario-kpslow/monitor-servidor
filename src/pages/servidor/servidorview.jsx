@@ -21,23 +21,27 @@ export class ServidorView extends Component {
     }
 
     servicos() {
-        <If teste={this.props.servidor.servicos}>
-            {this.props.servidor.servicos.map(servico => (
+
+        const servicos = this.props.servidor.servicos|| []
+        return(
+        <If teste={servicos}>
+            {servicos.map(servico => (
                 <li key={servico.id} className="list-group-item">{servico.nome}</li>
             ))}
-        </If>
+        </If>)
     }
 
     menu(){
         return (
-            <div>OK</div>
+            <Link className="btn btn-primary" to={`/servico/cadastro/${this.props.servidor.id}`}>
+                <i className="fa fa-plus" />
+            </Link>
         )
     }
 
-
     render() {
 
-        const servidor = this.props.servidor.servidor
+        const servidor = this.props.servidor
         return (
             <ServidorCard servidor={servidor} menu={this.menu()}>
                 <ul className="list-group list-group-flush">
@@ -49,7 +53,7 @@ export class ServidorView extends Component {
 }
 
 const mapState = state => ({
-    servidor: state.servidor
+    servidor: state.servidor.servidor
 })
 
 const actions = (dispach) => bindActionCreators({ getServidor }, dispach)

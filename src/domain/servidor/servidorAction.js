@@ -1,6 +1,6 @@
 import { URL } from '../../config/configConstantes'
 import { info } from '../../log/log'
-import {mensagem} from '../padrao/actionPadrao'
+import {mensagem, changeInput} from '../padrao/actionPadrao'
 
 export const pesquisar = () => {
     return dispacth => {
@@ -21,7 +21,7 @@ export const pesquisar = () => {
             }
         }).catch(err => {
             info('Erro no fetch')
-            mensagem({ tipo: "erro", descricao: err.message })
+            mensagem({ tipo: "erro", descricao: "Ops!!! Alguma coisa deu errado. Verifique sua conexao com a internet." })
             dispacth({ type: 'PESQUISAR_SERVIDOR', payload: [] })
         })
     }
@@ -31,7 +31,13 @@ export const novo = () => {
     return { type: "NOVO_SERVIDOR", payload: "" }
 }
 
+export const change = (event) =>(
+    {type:"CHANGE_SERVIDOR", payload:changeInput(event)}
+)
+
 export const incluir = (servidor) => {
+    info(JSON.stringify(servidor))
+
     return dispacth => {
         const opcoes = {
             method: "post",
@@ -41,9 +47,10 @@ export const incluir = (servidor) => {
                 "Accept": "Application/json",
             })
         }
-
+        info("iniciando add")
         fetch(new Request(`${URL}/servidor`, opcoes))
             .then(response => {
+                info("response ok")
                 if (response.ok) {
                     mensagem({ tipo: "sucesso", descricao: "Servidor cadastrado" })
                     dispacth({
@@ -51,9 +58,25 @@ export const incluir = (servidor) => {
                         payload: servidor
                     })
                 } else {
-                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Servidor" })
+                  response.json().then(validacoes => {
+                    validacoes.forEach(e => {
+                        mensagem({
+                            tipo: "erro",
+                            descricao: e.mensagem
+                        })
+                    });
+                    const invalidos = []
+                    validacoes.forEach(e => (
+                        invalidos[e.elemento] = e.mensagem
+                    ))
+                    dispacth({
+                        type: 'ERRO_SERVIDOR',
+                        payload: invalidos
+                    })
+                })
                 }
             }).catch(error => {
+                info(error)
                 mensagem({ tipo: "erro", descricao: error.message })
             })
     }

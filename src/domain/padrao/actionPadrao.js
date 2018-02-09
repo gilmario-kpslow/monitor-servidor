@@ -14,14 +14,14 @@ const processaPropriedades = (name) =>{
     return  { [prop]: newObj }
 }
 
-export const change = (event) => {
+export const changeInput = (event) => {
     const value = event.target.value
     const name = event.target.name
     if (name.includes('.')) {
         const processado = processaPropriedades(name)
-        return { type: "CHANGE", payload: processado}
+        return processado
     }
-    return { type: "CHANGE", payload: { [name]: value } }
+    return { [name]: value }
 }
 
 export const mensagem = (mensagem) => {

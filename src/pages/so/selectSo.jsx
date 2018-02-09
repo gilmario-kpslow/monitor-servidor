@@ -16,6 +16,7 @@ class SelectSo extends Component {
     render() {
         return (
             <SelectLabel label={this.props.label} control={this.props.control} estilo={this.props.estilo} name={this.props.name} change={this.props.change} value={this.props.value}>
+                <option value=""></option>
                 {
                     this.props.lista.map(so => (
                         <option key={so.id} value={so.id}>{so.nome}</option>

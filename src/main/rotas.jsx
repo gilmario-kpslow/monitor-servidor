@@ -7,6 +7,7 @@ import Home from '../pages/home/home'
 import ServidorCadastro from '../pages/servidor/cadastra'
 import ProcessadorCadastro from '../pages/processador/cadastro'
 import SoCadastro from '../pages/so/cadastra'
+import ServicoCadastro from '../pages/servico/cadastra'
 import ListaSo from '../pages/so/lista'
 import ListaProcessador from '../pages/processador/lista'
 import ServidorView from '../pages/servidor/servidorview'
@@ -19,6 +20,7 @@ export default () => (
                 <Route component={Home} path="/" exact />
                 <Route component={ServidorCadastro} path="/servidor/cadastro/:id" />
                 <Route component={ServidorCadastro} path="/servidor/cadastro" />
+                <Route component={ServicoCadastro} path="/servico/cadastro/:servidor" />
                 <Route component={SoCadastro} path="/so/cadastro" />
                 <Route component={ListaSo} path="/so/lista" />
                 <Route component={ListaProcessador} path="/processador/lista" />

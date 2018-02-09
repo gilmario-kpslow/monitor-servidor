@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import InputLabel from '../../componentes/form/inputLabel'
-import { incluir, novo } from '../../domain/so/soAction'
-import { change } from '../../domain/padrao/actionPadrao'
+import { incluir, change, novo } from '../../domain/so/soAction'
 import { info } from '../../log/log'
 import Panel from '../../componentes/layout/panel'
 import {publicaRedux} from '../../componentes/logica/publicaRedux'
@@ -13,15 +12,15 @@ class SoCadastro extends Component {
     }
 
     footer() {
-        return (<button className="btn btn-danger form-control" onClick={() => { this.props.incluir(this.props.so) }}><i className="fa fa-disk"></i> Salvar</button>)
+        return (<button className="btn btn-primary btn-sm form-control flutuante" onClick={() => { this.props.incluir(this.props.so) }}><i className="fa fa-save"></i> Salvar</button>)
     }
 
     render() {
         return (
             <div>
-                <Panel titulo="Cadastro de Sistema Operacional" footer={this.footer()}>
+                <Panel stilo="col-md-6 col-md-auto" titulo="Cadastro de Sistema Operacional" footer={this.footer()}>
                     <div className="row">
-                        <InputLabel estilo="col-md" label="Nome" value={this.props.so.nome} name="nome" change={this.props.change} />
+                        <InputLabel estilo={`form-control-sm col-md`} erros={this.props.erros} label="Nome" value={this.props.so.nome} name="nome" change={this.props.change} />
                     </div>
                 </Panel>
             </div>
@@ -30,6 +29,8 @@ class SoCadastro extends Component {
 }
 
 const mapState = state => ({
-    so: state.so.so
+    so: state.so.so,
+    erros: state.so.erros
 })
 export default publicaRedux(SoCadastro,mapState,{ incluir, change, novo })
+

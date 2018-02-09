@@ -1,22 +1,21 @@
 import React from 'react'
+import Menu from '../../componentes/layout/menu'
+import MenuItem from '../../componentes/layout/menuitem'
 
 
 export default props => (
-    <header className="wrapper">
-        <div>
-            <nav className="navbar navbar-dark bg-dark">
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-            </nav>
-            <div className="collapse acima" id="navbarToggleExternalContent">
-                <div className="bg-dark p-4">
-                    {props.children}
-                </div>
-            </div>
-        </div>
-        <nav className="navbar navbar-dark navbar-fixed-top bg-dark">
+    <header>
+        <nav className="navbar navbar-dark navbar-fixed-top navbar-expand-lg bg-dark">
             <a className="navbar-brand" href="#">Monitor</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav">
+                    <MenuItem para="/so/cadastro" label="SO" />
+                    <MenuItem para="/servidor/cadastro" label="Servidor" />
+                </ul>
+            </div>
         </nav>
-    </header >
+    </header>
 )

@@ -1,2 +1,3 @@
 FROM nginx:latest
-COPY public/* /usr/share/nginx/html
+LABEL manteiner "gilmariosoftware"
+COPY public/* /usr/share/nginx/html/

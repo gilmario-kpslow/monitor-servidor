@@ -1,8 +1,6 @@
-import { URL } from '../../config/configConstantes'
-import { toast } from 'react-toastify'
-import { info } from '../../log/log'
-import { mensagem } from '../padrao/actionPadrao';
-
+import {URL} from '../../config/configConstantes'
+import {info} from '../../log/log'
+import {mensagem, changeInput} from '../padrao/actionPadrao'
 
 export const pesquisar = () => {
     return dispacth => {
@@ -13,27 +11,36 @@ export const pesquisar = () => {
                 "Accept": "Application/json",
             })
         }
-        info('Iniciando pesquisa')
         fetch(`${URL}/so`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'PESQUISAR_SO', payload: response.json() })
+                dispacth({
+                    type: 'PESQUISAR_SO',
+                    payload: response.json()
+                })
             } else {
                 info('Erro ao consultar')
-                mensagem({ tipo: "erro", response })
+                mensagem({
+                    tipo: "erro",
+                    response
+                })
             }
         }).catch(err => {
-            info('Erro no fetch')
-            mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'PESQUISAR_SO', payload: [] })
+            info(err)
+            mensagem({
+                tipo: "erro",
+                descricao: err.message
+            })
+            dispacth({
+                type: 'PESQUISAR_SO',
+                payload: []
+            })
         })
     }
 }
 
-export const novo = () => {
-    return { type: "NOVO_SO", payload: {} }
-}
-
 export const incluir = (so) => {
+
+    info(JSON.stringify(so))
     return dispacth => {
         const opcoes = {
             method: "post",
@@ -43,27 +50,49 @@ export const incluir = (so) => {
                 "Accept": "Application/json",
             })
         }
-
         fetch(new Request(`${URL}/so`, opcoes))
             .then(response => {
                 if (response.ok) {
-                    mensagem({ tipo: "sucesso", descricao: "Sistema Operacional cadastrado" })
+                    mensagem({
+                        tipo: "sucesso",
+                        descricao: "Sistema Operacional cadastrado"
+                    })
                     dispacth({
-                        type: 'SALVAR_SO',
-                        payload: so
+                        type: "NOVO_SO",
+                        payload: {}
                     })
                 } else {
-                    mensagem({ tipo: "erro", descricao: "Erro ao cadastrar Sistema Operacional" })
+                    response.json().then(validacoes => {
+                        validacoes.forEach(e => {
+                            mensagem({
+                                tipo: "erro",
+                                descricao: e.mensagem
+                            })
+                        });
+                        const invalidos = []
+                        validacoes.forEach(e => (
+                            invalidos[e.elemento] = e.mensagem
+                        ))
+                        dispacth({
+                            type: 'ERRO_SO',
+                            payload: invalidos
+                        })
+                    })
                 }
             }).catch(error => {
-                mensagem({ tipo: "erro", descricao: error.message })
+                info(error)
+                mensagem({
+                    tipo: "erro",
+                    descricao: "Ops!!! Alguma coisa deu errado. Verifique sua conexao com a internet."
+                })
             })
     }
 }
 
+
+
 export const getSo = id => {
 
-    info(id)
     return dispacth => {
         const opcoes = {
             method: "get",
@@ -75,16 +104,32 @@ export const getSo = id => {
         info('Iniciando view' + id)
         fetch(`${URL}/so/${id}`, opcoes).then(response => {
             if (response.ok) {
-                dispacth({ type: 'VER_SO', payload: response.json() })
+                dispacth({
+                    type: 'VER_SO',
+                    payload: response.json()
+                })
             } else {
                 info('Erro ao consultar')
-                mensagem({ tipo: "erro", response })
+                mensagem({
+                    tipo: "erro",
+                    response
+                })
             }
         }).catch(err => {
             info('Erro no fetch')
-            mensagem({ tipo: "erro", descricao: err.message })
-            dispacth({ type: 'VER_SO', payload: '' })
+            mensagem({
+                tipo: "erro",
+                descricao: err.message
+            })
+            dispacth({
+                type: 'VER_SO',
+                payload: ''
+            })
         })
     }
 }
+
+export const change = (event) =>(
+    {type: "CHANGE_SO", payload: changeInput(event)}
+)
 
